@@ -1,5 +1,4 @@
 # AC 2nd Average Grade
-# Test
 
 first_period = float(input("What is your 1st period class grade? "))
 second_period = float(input("What is your 2nd period class grade? "))

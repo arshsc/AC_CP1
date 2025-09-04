@@ -5,9 +5,10 @@
 # .capitalize() => capitalizes the first letter
 # .title() => capitalizes the first letter of every word
 
-age = input("Bro how old are you?")
+age = int(input("Bro how old are you?"))
 name = input("What is your name").strip().title()
-print("Hello {}, it is nice to meet you! You are {} years old!".format(name, age))
+print("Hello {}, it is nice to meet you! You are {:.2f} years old!".format(name, age))
+print(f"Hello {name}, it is nice to meet you! You are {age:.1f} years old!")
 
 #age = input("Bro how old are you?")
 #print(age.isdigit())

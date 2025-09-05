@@ -14,8 +14,8 @@ print(f"Hello {name}, it is nice to meet you! You are {age:.1f} years old!")
 #print(age.isdigit())
 #print("Really? " + age + "is old.")
 
-#sentence = "The quick brown fox jumps over the lazy dog!"
-#word = "brown"
-#print(sentence.find(word))
-#length = len(word)
-#print(sentence.replace(word, "yellow"))
+sentence = "The quick brown fox jumps over the lazy dog!"
+word = "brown"
+print(sentence.find(word))
+length = len(word)
+print(sentence.replace(word, "yellow"))

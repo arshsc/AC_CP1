@@ -1,7 +1,7 @@
 #AC 2nd Idiot Proof
 
-first_name = input("What is your first name: ").strip().capitalize()
-last_name = input("What is your last name: ").strip().capitalize()
-phone = int(input("What is your phone number: "))
-gpa = float(input("what is your GPA: "))
-print(phone.replace("-", " ")) 
+full_name = input("What is your full name: ").strip().title()
+phone = input("What is your phone number: ").strip()
+gpa = float(input("what is your GPA: ").strip())
+
+print(f"Name: {full_name}\nPhone Number: {phone.replace("-", " ")}\nGPA:{gpa:.1f}")

@@ -11,7 +11,7 @@ print("Hello {}, it is nice to meet you! You are {:.2f} years old!".format(name,
 print(f"Hello {name}, it is nice to meet you! You are {age:.1f} years old!")
 
 #age = input("Bro how old are you?")
-#print(age.isdigit())
+#print(age isdigit())
 #print("Really? " + age + "is old.")
 
 sentence = "The quick brown fox jumps over the lazy dog!"

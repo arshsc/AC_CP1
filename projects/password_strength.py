@@ -1,4 +1,4 @@
-# AC 2nd Password Strength
+# AC 2nd Password Strength Checker
 
 # Step 1: Ask user for their password initalize strength score 0, and set all requirements to false
 password = input("Enter your password: ")
@@ -18,32 +18,31 @@ special_characters = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_"
     # Atleast 8 Character Length
 if len(password) >= 8:
     length_req = True
+    #Step 3: Add points for each requirement met
+    # Length Requirement: +1 point
     score += 1
     # Atleast 1 Uppercase letter
 if any(char.isupper() for char in password):
     uppercase_req = True
+    # Containing uppercase letter: +1 point
     score += 1
     # Atleast 1 Lowercase letter
 if any(char.islower() for char in password):
     lowercase_req = True
+    # Containing lowercase letter: +1 point
     score += 1
     # Atleast 1 Number
 if any(char.isdigit() for char in password):
     number_req = True
+    # Containing a number: +1 point
     score += 1
     # Atleast 1 Special Character
 for item in special_characters:
     if item in password:
         special_char_req = True
+        # Containing a special character: +1 point
         score += 1
         break
-
-# Step 3: Calculate the strength
-# Length Requirement: +1 point
-# Containing uppercase letter: +1 point
-# Containing lowercase letter: +1 point
-# Containing a number: +1 point
-# Containing a special character: +1 point
 
 # Display Password Strength Assessment
 print(f"\nPassword Strength Assessment:\nLength (8+ Characters): {length_req}\nContains Uppercase: {uppercase_req}\nContains Lowercase: {lowercase_req}\nContains a Number: {number_req}\nContains a Special Character: {special_char_req}\n")

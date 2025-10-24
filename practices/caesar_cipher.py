@@ -1,16 +1,30 @@
 # AC 2nd Caesar Cipher
 
-# Use ASCII
-print(f"a = {ord("a")}")
-print(f"100 = {chr(100)}")
+def encode(message, shift):
+    for letter in message:
+        if letter.isalpha():
+            print(chr(ord(letter) + shift), end="")
+        else:
+            print(letter, end="")
+    print()
 
-choice = input("Choose operaton:\n(1) Encode\n(2) Decode\n")
+def decode(message, shift):
+    for letter in message:
+        if letter.isalpha():
+            print(chr(ord(letter) - shift), end="")
+        else:
+            print(letter, end="")
+    print()
+
+choice = input("Choose operatoin:\n(1) Encode\n(2) Decode\n")
 message = input("Enter the message:\n")
-shift_value = input("Enter a shift value as an integer:\n")
+shift_value = int(input("Enter a shift value as an integer:\n"))
 
 #Encode
 if choice == "1":
-    for letter in message:
+    encode(message, shift_value)
 #Decode
-if choice == "2":
-    for letter in message:
+elif choice == "2":
+    decode(message, shift_value)
+else:
+    print("Invalid Option")

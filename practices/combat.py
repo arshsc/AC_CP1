@@ -17,7 +17,7 @@ if fighter_class == "1":
 elif fighter_class == "2":
     player_health = 30
     player_defense = 12
-    player_damage_bonus = 7
+    player_damage_bonus = 71
     print(f"\nHealth: {player_health}\nDefense: {player_defense}\nAttack: D20 + 6\nDamage: D8 + 7")
 # Rogue
 elif fighter_class == "3":
@@ -35,13 +35,11 @@ monster_damage = random.randint(5, 12)
 print(f"\nYou are being attacked by a {monster_name}!\n")
 
 def player_turn(player_health, monster_health, player_damage_bonus):
-    """Handles player's choice and returns updated healths."""
     print("What would you like to do?")
     print("(1) Normal Attack")
     print("(2) Wild Attack (2x Damage but you will also take damage)")
     print("(3) Drink a healing potion (+9 Health)")
     print("(4) Flee (You may or may not get away)\n")
-
     choice = input("Your choice: ")
 
     if choice == "1":
@@ -74,7 +72,6 @@ def player_turn(player_health, monster_health, player_damage_bonus):
 
 
 def monster_turn(player_health, monster_damage):
-    """Monster attacks and returns new player health."""
     damage = random.randint(5, 12)
     player_health -= damage
     print(f"The Dire Wolf did {damage} damage to you!")

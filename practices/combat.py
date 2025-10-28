@@ -49,7 +49,6 @@ def player_turn(player_health, monster_health, player_damage_bonus):
         monster_health -= damage
         print(f"\nYou hit! You dealt {damage} damage!")
         print(f"{monster_name} now has {monster_health} Health\n")
-
     elif choice == "2":
         damage = (random.randint(1, 8) + player_damage_bonus) * 2
         recoil = random.randint(1, 10)
@@ -58,11 +57,9 @@ def player_turn(player_health, monster_health, player_damage_bonus):
         print(f"\nWild attack! You dealt {damage} damage but hurt yourself for {recoil}!")
         print(f"{monster_name} now has {monster_health} Health")
         print(f"Your health is now {player_health}\n")
-
     elif choice == "3":
         player_health += 9
         print(f"\nYou drink a potion. Your health is now {player_health}.\n")
-
     elif choice == "4":
         flee_chance = random.randint(1, 4)
         if flee_chance <= 3:
@@ -97,7 +94,6 @@ while player_health > 0 and monster_health > 0 and not fled:
     if fled or monster_health <= 0:
         break
     player_health = monster_turn(player_health, monster_damage)
-
 if fled:
     print("You escaped safely!\n")
 elif player_health <= 0:

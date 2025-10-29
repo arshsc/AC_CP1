@@ -1,10 +1,10 @@
 # AC 2nd Turtle Race
 
+# Import the libraries
 import turtle
 import random
 
-
-# Finish Line
+# Create the Finish Line
 turtle.hideturtle()
 turtle.pensize(10)
 turtle.teleport(500, -300)
@@ -12,29 +12,44 @@ turtle.speed(100)
 turtle.left(90)
 turtle.forward(600)
 
+# Spawn in the turtles
 red = turtle.Turtle()
 blue = turtle.Turtle()
 yellow = turtle.Turtle()
 green = turtle.Turtle()
 purple = turtle.Turtle()
 
-red.teleport(-500, 200)
-red.forward(100)
+# Function to setup the turtles
+def turtlesetup(name, turtlecolor, teleportx, teleporty):
+    name.color(turtlecolor)
+    name.teleport(teleportx, teleporty)
+    name.shape("turtle")
+    name.turtlesize(1.5)
 
-blue.teleport(-500, 100)
-blue.forward(100)
+# Calling the function for each color
+turtlesetup(red, "red" ,-500, 200)
+turtlesetup(blue, "blue", -500, 100)
+turtlesetup(yellow, "yellow", -500, 0)
+turtlesetup(green, "green", -500, -100)
+turtlesetup(purple, "purple", -500, -200)
 
-yellow.teleport(-500, 0)
-yellow.forward(100)
+steps = random.randint(10, 200)
 
-green.teleport(-500, -100)
-green.forward(100)
-
-purple.teleport(-500, -200)
-purple.forward(100)
+while True:
+    for i in range(1,10):
+        steps = random.randint(10, 200)
+        red.forward(steps)
+        steps = random.randint(10, 200)
+        blue.forward(steps)
+        steps = random.randint(10, 200)
+        yellow.forward(steps)
+        steps = random.randint(10, 200)
+        green.forward(steps)
+        steps = random.randint(10, 200)
+        purple.forward(steps)
+        break
+    
 
 turtle.done()
 
-
-# spawn 5 different colored turtles and randomly generate speed
 # first turtle for pos to get across finish line declared winner

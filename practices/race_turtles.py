@@ -13,6 +13,7 @@ turtle.left(90)
 turtle.forward(600)
 
 # Spawn in the turtles
+turtles = ["red"]
 red = turtle.Turtle()
 blue = turtle.Turtle()
 yellow = turtle.Turtle()
@@ -20,9 +21,9 @@ green = turtle.Turtle()
 purple = turtle.Turtle()
 
 # Function to setup the turtles
-def turtlesetup(name, turtlecolor, teleportx, teleporty):
-    name.color(turtlecolor)
-    name.teleport(teleportx, teleporty)
+def turtlesetup(name, turtle_color, teleport_x, teleport_y):
+    name.color(turtle_color)
+    name.teleport(teleport_x, teleport_y)
     name.shape("turtle")
     name.turtlesize(1.5)
 
@@ -33,23 +34,56 @@ turtlesetup(yellow, "yellow", -500, 0)
 turtlesetup(green, "green", -500, -100)
 turtlesetup(purple, "purple", -500, -200)
 
-steps = random.randint(10, 200)
+# Setup function for win condition
 
-while True:
-    for i in range(1,10):
-        steps = random.randint(10, 200)
-        red.forward(steps)
-        steps = random.randint(10, 200)
-        blue.forward(steps)
-        steps = random.randint(10, 200)
-        yellow.forward(steps)
-        steps = random.randint(10, 200)
-        green.forward(steps)
-        steps = random.randint(10, 200)
-        purple.forward(steps)
-        break
+turtle_finish = turtle.Turtle()
+
+def turtle_win(name, turtle_color):
+        turtle_finish.hideturtle()
+        turtle_finish.color(turtle_color)
+        turtle_finish.penup()
+        turtle_finish.teleport(0, 350)
+        turtle_finish.pendown()
+        turtle_finish.write(f"{turtle_color} Wins!", move=False, align="center", font=("Arial", 40, "normal"))
+        turtle_finish.penup()
     
+game_running = True
+while game_running == True:
+    for i in range(10):
+        steps = random.randint(10, 100)
+        red.forward(steps)
+        if round(red.xcor(), 1) >= 500:
+            turtle_win("Red")
+            game_running = False
+            break
+
+        steps = random.randint(10, 100)
+        blue.forward(steps)
+        if round(blue.xcor(), 1) >= 500:
+            turtle_win(blue, "Blue")
+            game_running = False
+            break
+
+        steps = random.randint(10, 100)
+        yellow.forward(steps)
+        if round(yellow.xcor(), 1) >= 500:
+            turtle_win(yellow, "Yellow")
+            game_running = False
+            break
+
+        steps = random.randint(10, 100)
+        green.forward(steps)
+        if round(green.xcor(), 1) >= 500:
+            turtle_win(green, "Green")
+            game_running = False
+            break
+
+        steps = random.randint(10, 100)
+        purple.forward(steps)
+        if round(purple.xcor(), 1) >= 500:
+            turtle_win(purple, "Purple")
+            game_running = False
+            break
+    break
 
 turtle.done()
-
-# first turtle for pos to get across finish line declared winner

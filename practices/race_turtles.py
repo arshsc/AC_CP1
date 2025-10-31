@@ -49,7 +49,7 @@ def turtle_win(name, turtle_color):
     
 game_running = True
 while game_running == True:
-    for i in range(10):
+    for i in range(1, 20):
         steps = random.randint(10, 100)
         red.forward(steps)
         if round(red.xcor(), 1) >= 500:

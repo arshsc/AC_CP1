@@ -34,10 +34,10 @@ turtlesetup(yellow, "yellow", -500, 0)
 turtlesetup(green, "green", -500, -100)
 turtlesetup(purple, "purple", -500, -200)
 
-# Setup function for win condition
-
+# Create turtle to display winner
 turtle_finish = turtle.Turtle()
 
+# Function to display who won
 def turtle_win(name, turtle_color):
         turtle_finish.hideturtle()
         turtle_finish.color(turtle_color)
@@ -47,11 +47,14 @@ def turtle_win(name, turtle_color):
         turtle_finish.write(f"{turtle_color} Wins!", move=False, align="center", font=("Arial", 40, "normal"))
         turtle_finish.penup()
     
+# Race in a loop
 game_running = True
 while game_running == True:
     for i in range(1, 20):
+        # Generate random steps
         steps = random.randint(10, 100)
         red.forward(steps)
+        # Win condition
         if round(red.xcor(), 1) >= 500:
             turtle_win("Red")
             game_running = False

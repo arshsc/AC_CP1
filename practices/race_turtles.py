@@ -56,7 +56,7 @@ while game_running == True:
         red.forward(steps)
         # Win condition
         if round(red.xcor(), 1) >= 500:
-            turtle_win("Red")
+            turtle_win(red, "Red")
             game_running = False
             break
 

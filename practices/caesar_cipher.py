@@ -3,7 +3,10 @@
 def encode(message, shift):
     for letter in message:
         if letter.isalpha():
-            print(chr(ord(letter) + shift), end="")
+            if letter.isupper():
+                print(chr((ord(letter) - 65 + shift) % 26 + 65), end="")
+            else:
+                print(chr((ord(letter) - 97 + shift) % 26 + 97), end="")
         else:
             print(letter, end="")
     print()
@@ -11,7 +14,10 @@ def encode(message, shift):
 def decode(message, shift):
     for letter in message:
         if letter.isalpha():
-            print(chr(ord(letter) - shift), end="")
+            if letter.isupper():
+                print(chr((ord(letter) - 65 - shift) % 26 + 65), end="")
+            else:
+                print(chr((ord(letter) - 97 - shift) % 26 + 97), end="")
         else:
             print(letter, end="")
     print()

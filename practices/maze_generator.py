@@ -1,8 +1,53 @@
 # AC 2nd Maze Generator
 
+# Import needed libraries
 import turtle
 import random
 
+# Set the two variables, a list with multiple nested lists inside representing each row or column
+maze_rows = [[random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
+             [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
+             [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
+             [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
+             [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
+             [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)]]
+
+maze_cols = [[random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
+             [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
+             [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
+             [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
+             [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
+             [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)]]
+
+# Set the turtles for row and column
+#turtle.Turtle()
+#turtle.pensize(5)
+#turtle.forward(300)
+#turtle.left(90)
+#turtle.forward(300)
+#turtle.left(90)
+#turtle.forward(300)
+#turtle.left(90)
+#turtle.forward(300)
+#turtle.left(90)
+
+rowturt = turtle.Turtle()
+rowturt.speed(5)
+rowturt.hideturtle()
+rowturt.pensize(5)
+rowturt.penup()
+rowturt.teleport(0, 0)
+
+colturt = turtle.Turtle()
+colturt.speed(5)
+colturt.hideturtle()
+colturt.pensize(5)
+colturt.penup()
+colturt.teleport(0, 0)
+colturt.left(90)
+
+
+# Function to check if the maze is solvable
 def is_solvable(row_grid, col_grid):
     size = len(row_grid) - 1
     visited = set()
@@ -27,61 +72,29 @@ def is_solvable(row_grid, col_grid):
             stack.append((x, y - 1))
     return False
 
-maze_rows = [[random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
-             [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
-             [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
-             [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
-             [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
-             [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)]]
-
-maze_cols = [[random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
-             [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
-             [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
-             [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
-             [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
-             [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)]]
-
-rowturt = turtle.Turtle()
-rowturt.penup()
-rowturt.teleport(0, 0)
-
-colturt = turtle.Turtle()
-colturt.penup()
-colturt.teleport(0, 0)
-colturt.left(90)
-
-count = 0
-
 def turtley(ycord, turtletype):
-    turtletype.teleport(0, ycord)
-    ycord += 10
+        turtletype.teleport(0, ycord)
+        ycord += 50
 
 def turtlex(xcord, turtletype):
-    turtletype.teleport(xcord, 0)
-    xcord += 10
+        turtletype.teleport(xcord, 0)
+        xcord += 50
 
-for rows in maze_rows:
-    turtley(0, rowturt)
-    for i in rows:
-        if i == 0:
-            count += 1
-            rowturt.penup()
-            rowturt.forward(10)
-        elif i == 1:
-            count += 1  
-            rowturt.pendown()
-            rowturt.forward(10)
-    
-for cols in maze_cols:
-    turtlex(0, colturt)    
-    for i in cols:
-        if i == 0:
-            count += 1
-            colturt.penup()
-            colturt.forward(10)
-        elif i == 1:
-            count += 1  
-            colturt.pendown()
-            colturt.forward(10)  
+def drawmaze(group, turttype):
+    for row in group:
+        for grid in row:
+            if grid == 0:
+                turttype.penup()
+                turttype.forward(50)
+            if grid == 1:
+                turttype.pendown()
+                turttype.forward(50)
+        turttype.teleport(0, 50)
+
+
+
+drawmaze(maze_rows, rowturt)
+#drawmaze(maze_cols, colturt)
+
 
 turtle.done()

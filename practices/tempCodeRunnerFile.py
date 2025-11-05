@@ -1,0 +1,1 @@
+urttype.teleport(0, 50) 

@@ -4,15 +4,16 @@
 import turtle
 import random
 
+
 # Variables
 
 # Set the two variables, a list with multiple nested lists inside representing each row or column
-maze_rows = [[random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
+maze_rows = [[random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
              [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
              [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
              [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
              [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
-             [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)]]
+             [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)]]
 
 maze_columns = [[random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
              [random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)],
@@ -28,30 +29,34 @@ border = turtle.Turtle()
 row_turtle = turtle.Turtle()
 column_turtle = turtle.Turtle()
 
+# Turtle to indicate start and end
+#title = turtle.Turtle()
+#title.teleport(25, -50)
+#title.hideturtle()
+#title.write("Start", move=False, align="center", font=("Arial", 20, "normal"))
+#title.teleport(275, 325)
+#title.write("End", move=False, align="center", font=("Arial", 20, "normal"))
+
 # Functions
 
-# Function to create the border of the maze
+# Function to draw the border of the maze
 def draw_border():
-    border.speed(8)
+    border.teleport(0, 0)
+    border.speed(15)
     border.hideturtle()
     border.pensize(5)
-    border.penup()
-    border.forward(50)
-    border.pendown()
+    border.teleport(50, 0)
     border.forward(250)
     border.left(90)
     border.forward(300)
-    border.left(90)
-    border.penup()
-    border.forward(50)
-    border.pendown()
-    border.forward(250)
-    border.left(90)
+    border.teleport(0, 0)
     border.forward(300)
+    border.right(90)
+    border.forward(250)
 
-# Function to setup the row turtle and column turtle
+# Function to setup the row turtle and column turtle with the right settings
 def setup_turtles(turtle_type, left_turn):
-    turtle_type.speed(8)
+    turtle_type.speed(15)
     turtle_type.hideturtle()
     turtle_type.pensize(5)
     turtle_type.penup()
@@ -62,6 +67,8 @@ def setup_turtles(turtle_type, left_turn):
 def draw_maze(group, turtle_type, x_cord_value, y_cord_value):
     y_cord = 0
     x_cord = 0
+    row_turtle.forward(50)
+
     for row in group:
         for grid in row:
             if grid == 0:
@@ -70,13 +77,13 @@ def draw_maze(group, turtle_type, x_cord_value, y_cord_value):
             if grid == 1:
                 turtle_type.pendown()
                 turtle_type.forward(50)
+
         y_cord += y_cord_value
         x_cord += x_cord_value
         turtle_type.teleport(x_cord, y_cord)
 
 # Function to check if the maze is solvable
 def is_solvable(row_grid, column_grid):
-
     size = len(row_grid) - 1
     visited = set()
     stack = [(0,0)]
@@ -101,15 +108,20 @@ def is_solvable(row_grid, column_grid):
     return False
         
 # Calling the functions
-
 setup_turtles(row_turtle, 0)
 setup_turtles(column_turtle, 90)
-
 draw_border()
 
-draw_maze(maze_rows, row_turtle, 0, 50)
-draw_maze(maze_columns, column_turtle, 50, 0)
+solvable = is_solvable(maze_rows, maze_columns)
 
-is_solvable(maze_rows, maze_columns)
+while solvable == False:
+    if solvable == True:
+        draw_border()
+        setup_turtles(row_turtle, 0)
+        setup_turtles(column_turtle, 90)
+        draw_maze(maze_rows, row_turtle, 0, 50)
+        draw_maze(maze_columns, column_turtle, 50, 0)
+        print("Solvable")
+        break
 
 turtle.done()

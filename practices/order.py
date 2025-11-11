@@ -1,34 +1,60 @@
 # AC 2nd Order Up
 
+# Setting up the meni
 # Define the menu dictionary
 menu = {
     # Define another dictionary for drinks
-    "drink": {
+    "Drinks": {
         # List the 4 items with the key and the value as the price
         "Water": 0.00,
         "Fountain Drink": 2.49,
         "Lemonade": 2.79,
-        "Sweet Tea": 2.49
+        "Sweet Tea": 2.49,
+        "Unsweet Tea": 2.49
     },
     # Define another dictionary for the main course
-    "main course": {
+    "Main Courses": {
         "The Box Combo": 11.99,
         "The 3 Finger Combo": 10.39,
         "The Caniac Combo": 17.29,
-        "": 
+        "The Sandwich Combo": 10.79,
+        "The Kids Combo": 6.99 
     },
     # Define another dictionary for the side dishes
-    "side dishes": {
-        "": ,
-        "": ,
-        "": ,
-        "": 
+    "Side Dishes": {
+        "Chicken Finger": 1.99,
+        "Crinke-Cut Fries": 2.59,
+        "Texas Toast": 1.35,
+        "Coleslaw": 1.35,
+        "Cane's Sauce": 0.39 
     }
 }
 
-# Display the menu
 
+# Display the menu
+# Function to display the menu
+def display_menu(menu_item):
+    item_number = 0
+    print(f"\n{menu_item}:")
+    for i in menu[menu_item]:
+        item_number += 1
+        print(f"({item_number}) ${menu[menu_item][i]} {i}")
+# Calling the function to display the whole menu
+print("Menu:")
+display_menu("Drinks")
+display_menu("Main Courses")
+display_menu("Side Dishes")
+
+
+#Ordering
 # Ask the user what they want to drink
+drink_order = input("What drink would you like to order?")
+if drink_order == 1:
+
+
+def ordering(item_order, )
+
+
 
 # Ask the user what they want as the main course
 

@@ -23,7 +23,7 @@ menu = {
     # Define another dictionary for the side dishes
     "Side Dishes": {
         "Chicken Finger": 1.99,
-        "Crinke-Cut Fries": 2.59,
+        "Crinkle-Cut Fries": 2.59,
         "Texas Toast": 1.35,
         "Coleslaw": 1.35,
         "Cane's Sauce": 0.39 
@@ -31,7 +31,7 @@ menu = {
 }
 
 
-# Display the menu
+# Functions
 # Function to display the menu
 def display_menu(menu_item):
     item_number = 0
@@ -39,7 +39,9 @@ def display_menu(menu_item):
     for i in menu[menu_item]:
         item_number += 1
         print(f"({item_number}) ${menu[menu_item][i]} {i}")
-# Calling the function to display the whole menu
+
+# Calling the functions
+# Display the menu
 print("Menu:")
 display_menu("Drinks")
 display_menu("Main Courses")
@@ -47,13 +49,22 @@ display_menu("Side Dishes")
 
 
 #Ordering
-# Ask the user what they want to drink
-drink_order = input("What drink would you like to order?")
-if drink_order == 1:
+total_cost = 0
+
+drink_order = input("\nWhat drink would you like to order?\n")
+
+# USE ITEM NAME INSTEAD OF NUMBER
+def ordering(order, menu_item, item, cost):
+    if order == 1:
+        cost += menu[menu_item][item]
+    
+
+ordering(drink_order, "Drinks", "water", total_cost)
 
 
-def ordering(item_order, )
-
+#main_course_order = order_input("main course")
+#side_dish_order_1 = order_input("first side dish")
+#side_dish_order_2 = order_input("second side dish")
 
 
 # Ask the user what they want as the main course

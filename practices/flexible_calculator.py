@@ -3,26 +3,39 @@
 # Import needed libraries
 import statistics
 
+# Variables
+# List to hold the numbers
+numbers_list = []
+
+
+# Functions
+# Function to ask the user what operator they want to pick
+def operation_choice():
+    print("\nAvailable operations: sum, average, max, min, product")
+    return input("\nWhich operation would you like to perform? ")
+
+# Function to take in the numbers and add them into a list
+def number_inputs(*numbers, num_list):
+    print("\nEnter numbers (Type 'done' when finished):")
+    while True:
+        numbers = input("Number: ").strip().lower()
+        if numbers == "done":
+            break
+        elif numbers.isdigit() == True:
+            num_list.append(numbers)
+            continue
+        else:
+            print("Not a number, please try again.")
+            continue
+
+"""def operation(*numbers, operation):
+    print("\nAvailable operations: sum, average, max, min, product")"""
+
 # Welcome the user to the calculator
 print("Welcome to the Flexible Calculator!")
 
-# Tell the user the available operations
 
-# A function to take the numbers the user gives and uses the operation picked on them.
+operation = operation_choice()
 
-def operation(*numbers, operation):
-    print("\nEnter numbers (Type 'done' when finished):")
-    print("\nAvailable operations: sum, average, max, min, product")
-    while True:
-        for num in numbers:
-            input(f"\nNumber: {num}")
-            if num.isdigit():
-                for i in num:
-                    
-            elif num == "Done":
-                print()
-            else:
-                print("Invalid Number, please try again.")
-
-operation_input = input("\nWhich operation would you like to perform? ")
-operation("num1", "num2", operation=operation_input)
+number_inputs(num_list=numbers_list)
+print(numbers_list)

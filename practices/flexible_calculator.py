@@ -15,27 +15,30 @@ def operation_choice():
     return input("\nWhich operation would you like to perform? ")
 
 # Function to take in the numbers and add them into a list
-def number_inputs(*numbers, num_list):
-    print("\nEnter numbers (Type 'done' when finished):")
+def number_inputs(*number, num_list):
+    print("\nEnter whole numbers (Type 'done' when finished):")
     while True:
-        numbers = input("Number: ").strip().lower()
-        if numbers == "done":
+        number = input("Number: ").strip()
+        if number.lower() == "done":
             break
-        elif numbers.isdigit() == True:
-            num_list.append(numbers)
+        elif number.isnumeric() == True:
+            int_number = int(number)
+            num_list.append(int_number)
             continue
         else:
             print("Not a number, please try again.")
             continue
 
-"""def operation(*numbers, operation):
-    print("\nAvailable operations: sum, average, max, min, product")"""
+def operation(num_list, operation):
+    if operation == "sum":
+        total_sum = sum(num_list)
+        print(f"Calculating {operation} of: {num_list}\nResult: {total_sum}")
 
 # Welcome the user to the calculator
 print("Welcome to the Flexible Calculator!")
 
 
-operation = operation_choice()
-
+operation_chosen = operation_choice()
 number_inputs(num_list=numbers_list)
 print(numbers_list)
+operation(numbers_list, operation_chosen)

@@ -48,26 +48,30 @@ storage_cabinet_searched = False
 main_area_searched = False
 
 def trailer_home(bathroom_searched, storage_cabinet_searched, main_area_searched):
+
+    location = "Trailer Home"
+    
     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
     print("You walk over towards the trailer home. The door is unlocked and you walk in.")
     print("\nThis is a very small trailer home. The walls are yellow with dirt scattered all throughout the inside.")
 
-    while True:
+    while location == "Trailer Home":
 
         while True:
-            search = input("\nThere are 3 areas worth searching.\n   \n-Bathroom   \n-Storage Cabinet   \n-Main Area\n\nWhere would you like to search: ").lower().strip()
+            search = input("\nThere are 3 areas worth searching.\n   \n     -Bathroom   \n     -Storage Cabinet   \n     -Main Area     \n     -Exit\n\nWhere would you like to go: ").lower().strip()
 
-            if search == "bathroom" or "storage cabinet" or "main area":
+            if search == "bathroom" or "storage cabinet" or "main area" or "exit":
                 break
             else:
                 print("\nThat is not a room, please retry.")
 
         while True:
             if search == "bathroom":
+
                 if bathroom_searched == False:
                     bathroom_searched = True
                     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-                    print("\nYou enter the cramped bathroom. Near the sink, there is a bandage. You pick it up and put it in your backpack. Nothing else is in here and you exit.")
+                    print("\nYou enter the cramped bathroom. Near the sink, there is a bandage. You pick it up and put it in your backpack. Nothing else is in here and you exit.\n\n+ Bandage")
                     inventory["Consumables"]["Bandage"] = 10
                     break
                 elif bathroom_searched == True:
@@ -79,7 +83,7 @@ def trailer_home(bathroom_searched, storage_cabinet_searched, main_area_searched
                 if storage_cabinet_searched == False:
                     storage_cabinet_searched = True
                     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-                    print("\nYou open the big storage cabinet. Old clothes and jackets scatter the insides. You dig through the old clothes and find a key with an engraving that says \"School Front Door\". You stash it in your backpack.")
+                    print("\nYou open the big storage cabinet. Old clothes and jackets scatter the insides. You dig through the old clothes and find a key with an engraving that says \"School Front Door\". You stash it in your backpack.\n\n+ School Front Door Key")
                     break
                 elif storage_cabinet_searched == True:
                     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
@@ -90,45 +94,74 @@ def trailer_home(bathroom_searched, storage_cabinet_searched, main_area_searched
                 if main_area_searched == False:
                     main_area_searched = True
                     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-                    bathroom_note = input("\nYou look around your surroundings. On the small dining table there is a note available to read.\n     Yes\n     No Would you like to read it: ").strip().lower()
-                    if bathroom_note == "yes" or "y":
+                    main_area_note = input("\nYou look around your surroundings. On the small dining table there is a note available to read.\n\n     -Yes     \n     -No \n\nWould you like to read it: ").strip().lower()
+                    if main_area_note == "yes" or "y":
+                        print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
                         print("\n\"WHAT NOTE SAYS!\"")
                         break
-                    elif bathroom_note == "no" or "n":
+                    elif main_area_note == "no" or "n":
                         print("You put the note back down.")
                         break
                 elif main_area_searched == True:
                     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-                    bathroom_note = input("\nThere is nothing else here besides the note. Would you like to read the note again: ")
+                    main_area_note = input("\nThere is nothing else here besides the note. Would you like to read the note again: ")
                     while True:
-                        if bathroom_note == "yes" or "y":
+                        if main_area_note == "yes" or "y":
+                            print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
                             print("\n\"WHAT NOTE SAYS!\"")
                             break
-                        elif bathroom_note == "no" or "n":
+                        elif main_area_note == "no" or "n":
                             break
+
+            elif search == "exit":
+                print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+                print("\nYou exit the trailer home")
+                location = "Town"
+                break
+
+            else:
+                print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+                print("\nThat is not a valid option, please retry.")
+                break
 
         
 
+location = "Town"
 
-def room_input(locations):
+def room_input(locations, inventory):
 
-    global trailer_home_searched
-
-    print("\nThese locations look worth exploring.\n")
-
-    for l in locations:
-        print(f"- {l}")
     while True:
-        location = input("\nWhere would you like to go: ").title()
+        print("\nThese locations look worth exploring.\n")
+
+        for l in locations:
+            print(f"     - {l}")
+        print("To see what is in your backpack")
+        print("\n     -Inventory")
+
+        location = input("\nWhat building would you like to go to: ").title().strip()
+
         if location not in locations:
+            print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
             print("\nThat place doesn't exist, choose another place.")
             continue
-        elif location == "Trailer Home":
+
+        elif location in location:
+            return location
+        
+        elif location == "inventory":
+            print(f"{inventory["Weapons: "]}")
+
+        
+    
+intro_dialogue()
+
+while True:
+    location = room_input(locations, inventory)
+
+    if location == "Trailer Home":
+        if trailer_home_searched == False:
             trailer_home(bathroom_searched, storage_cabinet_searched, main_area_searched)
             trailer_home_searched = True
-        else:
-            return location
-
-intro_dialogue()
-location = room_input(locations)
-print(location)
+        elif trailer_home_searched == True:
+            print("You have already searched the Trailer Home")
+            trailer_home(bathroom_searched = True, storage_cabinet_searched = True, main_area_searched = True)

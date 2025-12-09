@@ -58,7 +58,7 @@ def trailer_home(bathroom_searched, storage_cabinet_searched, main_area_searched
     while location == "Trailer Home":
 
         while True:
-            search = input("\nThere are 3 areas worth searching.\n   \n     -Bathroom   \n     -Storage Cabinet   \n     -Main Area     \n     -Exit\n\nWhere would you like to go: ").lower().strip()
+            search = input("\nThere are 3 areas worth searching.\n   \n     - Bathroom   \n     - Storage Cabinet   \n     - Main Area     \n     - Exit\n\nWhere would you like to go: ").lower().strip()
 
             if search == "bathroom" or "storage cabinet" or "main area" or "exit":
                 break
@@ -71,7 +71,7 @@ def trailer_home(bathroom_searched, storage_cabinet_searched, main_area_searched
                 if bathroom_searched == False:
                     bathroom_searched = True
                     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-                    print("\nYou enter the cramped bathroom. Near the sink, there is a bandage. You pick it up and put it in your backpack. Nothing else is in here and you exit.\n\n+ Bandage")
+                    print("\nYou enter the cramped bathroom. Near the sink, there is a bandage. You pick it up and put it in your backpack. Nothing else is in here and you exit.\n\n(+) Bandage")
                     inventory["Consumables"]["Bandage"] = 10
                     break
                 elif bathroom_searched == True:
@@ -83,7 +83,7 @@ def trailer_home(bathroom_searched, storage_cabinet_searched, main_area_searched
                 if storage_cabinet_searched == False:
                     storage_cabinet_searched = True
                     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-                    print("\nYou open the big storage cabinet. Old clothes and jackets scatter the insides. You dig through the old clothes and find a key with an engraving that says \"School Front Door\". You stash it in your backpack.\n\n+ School Front Door Key")
+                    print("\nYou open the big storage cabinet. Old clothes and jackets scatter the insides. You dig through the old clothes and find a key with an engraving that says \"School Front Door\". You stash it in your backpack.\n\n(+) School Front Door Key")
                     break
                 elif storage_cabinet_searched == True:
                     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
@@ -94,7 +94,7 @@ def trailer_home(bathroom_searched, storage_cabinet_searched, main_area_searched
                 if main_area_searched == False:
                     main_area_searched = True
                     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-                    main_area_note = input("\nYou look around your surroundings. On the small dining table there is a note available to read.\n\n     -Yes     \n     -No \n\nWould you like to read it: ").strip().lower()
+                    main_area_note = input("\nYou look around your surroundings. On the small dining table there is a note available to read.\n\n     - Yes     \n     - No \n\nWould you like to read it: ").strip().lower()
                     if main_area_note == "yes" or "y":
                         print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
                         print("\n\"WHAT NOTE SAYS!\"")
@@ -124,6 +124,73 @@ def trailer_home(bathroom_searched, storage_cabinet_searched, main_area_searched
                 print("\nThat is not a valid option, please retry.")
                 break
 
+def collapsed_house(living_room_searched, bedroom_searched, rubble_pile_searched):
+
+    location = "Collapsed House"
+    
+    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+    print("You walk over towards the collapsed house. The door is unlocked and you walk in.")
+    print("\nAll that is left is a few standing wall. The roof has caved in.")
+
+    while location == "Collapsed House":
+
+        while True:
+            search = input("\nThere are 3 areas worth searching.\n   \n     - Living Room   \n     - Bedroom   \n     - Rubble Pile     \n     - Exit\n\nWhere would you like to go: ").lower().strip()
+
+            if search == "living room" or "bedroom" or "rubble pile" or "exit":
+                break
+            else:
+                print("\nThat is not a room, please retry.")
+
+        while True:
+            if search == "living room":
+
+                if living_room_searched == False:
+                    living_room_searched = True
+                    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+                    print("\nYou enter the wide living room. There is not much here besides a table and a few couches covered in rubble. Nothing is found here worth to take.")
+                    break
+                elif living_room_searched == True:
+                    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+                    print("\nYou already searched the living room, nothing was here to be found.")
+                    break
+
+            elif search == "storage cabinet":
+                if bedroom_searched == False:
+                    bedroom_searched = True
+                    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+                    print("\nYou walk into a lone doorway with no wall, this seems to be the master bedroom of the house. You see a dresser barely visible from all the rubble. You walk to it, dig to the dresser drawer and inside you find a bandage.\n\n(+) Bandage")
+                    inventory["Consumables"]["Bandage"] = 10
+                    break
+                elif bedroom_searched == True:
+                    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+                    print("\nYou have already searched the bedroom and found the bandage.")
+                    break
+
+            elif search == "main area":
+                if rubble_pile_searched == False:
+                    rubble_pile_searched = True
+                    rubble_pile_searched = True
+                    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+                    print("\nYou see a suspicious looking rubble pile. You dig through and find an unlocked chest, and in this chest is a key labeled \"Library\"\n\n(+) Library Key")
+                    inventory["Keys"]["Library Key"]
+                    break
+                elif rubble_pile_searched == True:
+                    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+                    print("\nYou have already searched the bedroom and found the bandage.")
+                    break
+
+            elif search == "exit":
+                print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+                print("\nYou exit the trailer home")
+                location = "Town"
+                break
+
+            else:
+                print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+                print("\nThat is not a valid option, please retry.")
+                break
+
         
 
 location = "Town"
@@ -135,10 +202,16 @@ def room_input(locations, inventory):
 
         for l in locations:
             print(f"     - {l}")
-        print("To see what is in your backpack")
-        print("\n     -Inventory")
+        print("\nTo see what is in your backpack")
+        print("\n     - Inventory")
 
         location = input("\nWhat building would you like to go to: ").title().strip()
+
+        """if location == "inventory" or "inv" or "i":
+            print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+            for key, item, in inventory.items():
+                print(f"{key}: {item}")
+            continue"""
 
         if location not in locations:
             print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
@@ -147,9 +220,6 @@ def room_input(locations, inventory):
 
         elif location in location:
             return location
-        
-        elif location == "inventory":
-            print(f"{inventory["Weapons: "]}")
 
         
     

@@ -1,7 +1,9 @@
 # AC 2nd Final Project Text Adventure Game
 
+# import needed libraries
 import random
 
+# dictionary for the inventory
 inventory = {
     "Weapons": {
         "Dagger": 10
@@ -14,39 +16,80 @@ inventory = {
     "Items": []
 }
 
-locations = ["Trailer Home", "Collapsed House", "Mansion", "Prison", "School", "Library", "Train Station", "Entrance of the Mine", "Underground Railroad"]
 
-trailer_home_searched = False
-collapsed_house_searched = False
-mansion_searched = False
-prison_searched = False
-school_searched = False
-library_searched = False
-train_station_searched = False
-entrance_of_the_mine_searched = False
-underground_railroad_searched = False
-
+# player stats
 player_health = 50
 player_damage = random.randint(1, 10)
 player_stamina = 10
 player_weapon_chosen = "Dagger"
 
+# servant stats (first boss)
 servant_health = 150
 servant_damage = random.randint(1, 20)
 
+# miner stats (final boss)
 miner_health = 250
 miner_damage = random.randint(25, 50)
 
-def intro_dialogue():
-    print("\nYou heard of a rumor about an abandoned, small, ghost town 20 minutes away from your home town having valuable gems somewhere deep in the mines. No one has dared to go retrieve the valuable gems as there are spirits preventing you from going into the mines. Many deaths have been reported at this town.\n\nYou decide you want to go.\n\nYou inform your family and friends, they all try to stop you but you are determined.\n\nYou pack your bag with these items.\n\nDagger\nBandage\nEnergy Drink\nPhone\n\nYou set out and get to the town. Your adventure begins.\n\nYou arrive to the desolate town. Buildings are boarded up, the roads have a layer of sand and dirt, no one has stepped foot here in years. You take out your phone to call your family. The call rings infinitely, your phone has no service. It is just you, all alone.")
 
-# Rooms
+# list of all locations
+locations = ["Trailer Home", "Collapsed House", "Mansion", "Prison", "School", "Library", "Train Station", "Entrance of the Mine", "Underground Railroad"]
 
-# Trailer Home
+# trailer home
+trailer_home_searched = False
 bathroom_searched = False
 storage_cabinet_searched = False
 main_area_searched = False
 
+# collapsed house
+collapsed_house_searched = False
+living_room_searched = False
+bedroom_searched = False
+rubble_pile_searched = False
+
+# mansion
+mansion_searched = False
+master_bedroom_searched = False
+vault_searched = False
+garden_searched = False
+
+# prison
+prison_searched = False
+kitchen_searched = False
+cell_hallway_searched = False
+cell_searched = False
+
+# school
+school_searched = False
+classroom_searched = False
+school_library_searched = False
+office_searched = False
+cafeteria_searched = False
+
+# library
+library_searched = False
+bookshelf_searched = False
+theatre_stage_searched = False
+front_desk_searched = False
+
+# train station
+train_station_searched = False
+ticket_office_searched = False
+boarding_area_searched = False
+
+# entrance of the mine
+entrance_of_the_mine_searched = False
+
+# underground railraod
+underground_railroad_searched = False
+
+
+# function for intro
+def intro_dialogue():
+    print("\nYou heard of a rumor about an abandoned, small, ghost town 20 minutes away from your home town having valuable gems somewhere deep in the mines. No one has dared to go retrieve the valuable gems as there are spirits preventing you from going into the mines. Many deaths have been reported at this town.\n\nYou decide you want to go.\n\nYou inform your family and friends, they all try to stop you but you are determined.\n\nYou pack your bag with these items.\n\nDagger\nBandage\nEnergy Drink\nPhone\n\nYou set out and get to the town. Your adventure begins.\n\nYou arrive to the desolate town. Buildings are boarded up, the roads have a layer of sand and dirt, no one has stepped foot here in years. You take out your phone to call your family. The call rings infinitely, your phone has no service. It is just you, all alone.")
+
+
+# trailer home
 def trailer_home(bathroom_searched, storage_cabinet_searched, main_area_searched):
 
     location = "Trailer Home"
@@ -67,7 +110,6 @@ def trailer_home(bathroom_searched, storage_cabinet_searched, main_area_searched
 
         while True:
             if search == "bathroom":
-
                 if bathroom_searched == False:
                     bathroom_searched = True
                     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
@@ -124,6 +166,7 @@ def trailer_home(bathroom_searched, storage_cabinet_searched, main_area_searched
                 print("\nThat is not a valid option, please retry.")
                 break
 
+# collapsed house
 def collapsed_house(living_room_searched, bedroom_searched, rubble_pile_searched):
 
     location = "Collapsed House"
@@ -144,7 +187,6 @@ def collapsed_house(living_room_searched, bedroom_searched, rubble_pile_searched
 
         while True:
             if search == "living room":
-
                 if living_room_searched == False:
                     living_room_searched = True
                     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
@@ -177,12 +219,12 @@ def collapsed_house(living_room_searched, bedroom_searched, rubble_pile_searched
                     break
                 elif rubble_pile_searched == True:
                     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-                    print("\nYou have already searched the bedroom and found the bandage.")
+                    print("\nYou have already searched the rubble pile and found the library key.")
                     break
 
             elif search == "exit":
                 print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-                print("\nYou exit the trailer home")
+                print("\nYou exit the collapsed house")
                 location = "Town"
                 break
 
@@ -191,6 +233,70 @@ def collapsed_house(living_room_searched, bedroom_searched, rubble_pile_searched
                 print("\nThat is not a valid option, please retry.")
                 break
 
+def mansion(master_bedroom_searched, vault_searched, garden_searched):
+
+    location = "Mansion"
+    
+    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+    print("You walk over towards the mansion. The door is unlocked and you walk in.")
+    print("\nThis house is huge. An endless hallway greets you, but most of the hallway seems to be blocked.")
+
+    while location == "Mansion":
+
+        while True:
+            search = input("\nThere are 3 areas worth searching.\n   \n     - Master Bedroom   \n     - Vault   \n     - Garden     \n     - Exit\n\nWhere would you like to go: ").lower().strip()
+
+            if search == "master bedroom" or "vault" or "garden" or "exit":
+                break
+            else:
+                print("\nThat is not a room, please retry.")
+
+        while True:
+            if search == "master bedroom":
+                if master_bedroom_searched == False:
+                    master_bedroom_searched = True
+                    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+                    print("\nYou enter the massive bedroom. There is elegant furniture throughout the whole room. You open the nightstand and find a key labeled \"Train Station\".\n\n(+) Train Station Key")
+                    inventory["Keys"]["Train Station Key"]
+                    break
+                elif master_bedroom_searched == True:
+                    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+                    print("\nYou already searched the master bedroom, you picked up the \"Train Station\" and nothing else is to be found.")
+                    break
+
+            elif search == "vault":
+                if vault_searched == False:
+                    vault_searched = True
+                    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+                    print("\nYou walk down the grand stairs into the basement. The only thing in this basement is a giant vault door, slightly cracked open. You peek in and see an intact glass showcase with an axe. This is not an ordinary axe, it has a mysterious dark aura around it. You pick it up and feel an eerie feeling.\n\n(+) Ghost Axe")
+                    inventory["Weapons"]["Ghost Axe"]
+                    break
+                elif vault_searched == True:
+                    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+                    print("\nYou have already searched the vault and found a the Ghost Axe")
+                    break
+
+            elif search == "garden":
+                if garden_searched == False:
+                    garden_searched = True
+                    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+                    print("\nYou walk to the back door and open the glass sliding door. A beautiful vibrant garden greets you. In the corner, you see a servant watering the flowers. He turns around and you see he is transparent. Its a ghost, and he seems to be angry at you.")
+                    break
+                elif garden_searched == True:
+                    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+                    print("\nYou have already fought the servant and got the...ITEM")
+                    break
+
+            elif search == "exit":
+                print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+                print("\nYou exit the Mansion")
+                location = "Town"
+                break
+
+            else:
+                print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+                print("\nThat is not a valid option, please retry.")
+                break
         
 
 location = "Town"
@@ -233,5 +339,21 @@ while True:
             trailer_home(bathroom_searched, storage_cabinet_searched, main_area_searched)
             trailer_home_searched = True
         elif trailer_home_searched == True:
-            print("You have already searched the Trailer Home")
+            print("\nYou have already searched the Trailer Home.")
             trailer_home(bathroom_searched = True, storage_cabinet_searched = True, main_area_searched = True)
+
+    elif location == "Collapsed House":
+        if collapsed_house_searched == False:
+            collapsed_house(living_room_searched, bedroom_searched, rubble_pile_searched)
+            collapsed_house_searched = True
+        elif collapsed_house_searched == True:
+            print("\nYou have already searched the Collapsed House.")
+            collapsed_house(living_room_searched = True, bedroom_searched = True, rubble_pile_searched = True)
+    
+    elif location == "Mansion":
+        if mansion_searched == False:
+            mansion(living_room_searched, bedroom_searched, rubble_pile_searched)
+            mansion_searched = True
+        elif mansion_searched == True:
+            print("\nYou have already searched the Mansion.")
+            mansion(master_bedroom_searched = True, vault_searched = True, garden_searched = True)

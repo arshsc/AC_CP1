@@ -9,13 +9,12 @@ inventory = {
         "Dagger": 10
     },
     "Consumables": {
-        "Bandage": 10,
-        "Energy Drink": 5
+        "Bandage": [10],  # +10 HP
+        "Energy Drink": [4]  # +4 Stamina
     },
     "Keys": [],
     "Items": []
 }
-
 
 # player stats
 player_health = 50
@@ -30,7 +29,6 @@ servant_damage = random.randint(1, 20)
 # miner stats (final boss)
 miner_health = 250
 miner_damage = random.randint(25, 50)
-
 
 # list of all locations
 locations = ["Trailer Home", "Collapsed House", "Mansion", "Prison", "School", "Library", "Train Station", "Entrance of the Mine", "Underground Railroad"]
@@ -82,14 +80,39 @@ boarding_area_searched = False
 # entrance of the mine
 entrance_of_the_mine_searched = False
 
-# underground railraod
+# underground railroad
 underground_railroad_searched = False
-
 
 # function for intro
 def intro_dialogue():
     print("\nYou heard of a rumor about an abandoned, small, ghost town 20 minutes away from your home town having valuable gems somewhere deep in the mines. No one has dared to go retrieve the valuable gems as there are spirits preventing you from going into the mines. Many deaths have been reported at this town.\n\nYou decide you want to go.\n\nYou inform your family and friends, they all try to stop you but you are determined.\n\nYou pack your bag with these items.\n\nDagger\nBandage\nEnergy Drink\nPhone\n\nYou set out and get to the town. Your adventure begins.\n\nYou arrive to the desolate town. Buildings are boarded up, the roads have a layer of sand and dirt, no one has stepped foot here in years. You take out your phone to call your family. The call rings infinitely, your phone has no service. It is just you, all alone.")
 
+def show_inventory():
+    print("\nWeapons:")
+    for weapon, dmg in inventory["Weapons"].items():
+        print(f" - {weapon}: {dmg} dmg")
+
+    print("\nConsumables:")
+    for item, effects in inventory["Consumables"].items():
+        for effect in effects:
+            if item == "Bandage":
+                print(f" - {item}: +{effect} HP")
+            elif item == "Energy Drink":
+                print(f" - {item}: +{effect} Stamina")
+
+    print("\nKeys:")
+    if len(inventory["Keys"]) == 0:
+        print(" - None")
+    else:
+        for key in inventory["Keys"]:
+            print(f" - {key}")
+
+    print("\nItems:")
+    if len(inventory["Items"]) == 0:
+        print(" - None")
+    else:
+        for item in inventory["Items"]:
+            print(f" - {item}")
 
 # trailer home
 def trailer_home(bathroom_searched, storage_cabinet_searched, main_area_searched):
@@ -105,7 +128,7 @@ def trailer_home(bathroom_searched, storage_cabinet_searched, main_area_searched
         while True:
             search = input("\nThere are 3 areas worth searching.\n   \n     - Bathroom   \n     - Storage Cabinet   \n     - Main Area     \n     - Exit\n\nWhere would you like to go: ").lower().strip()
 
-            if search == "bathroom" or "storage cabinet" or "main area" or "exit":
+            if search in ["bathroom", "storage cabinet", "main area", "exit"]:
                 break
             else:
                 print("\nThat is not a room, please retry.")
@@ -116,7 +139,7 @@ def trailer_home(bathroom_searched, storage_cabinet_searched, main_area_searched
                     bathroom_searched = True
                     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
                     print("\nYou enter the cramped bathroom. Near the sink, there is a bandage. You pick it up and put it in your backpack. Nothing else is in here and you exit.\n\n(+) Bandage")
-                    inventory["Consumables"]["Bandage"] = 10
+                    inventory["Consumables"]["Bandage"].append(10)
                     break
                 elif bathroom_searched == True:
                     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
@@ -140,23 +163,22 @@ def trailer_home(bathroom_searched, storage_cabinet_searched, main_area_searched
                     main_area_searched = True
                     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
                     main_area_note = input("\nYou look around your surroundings. On the small dining table there is a note available to read.\n\n     - Yes     \n     - No \n\nWould you like to read it: ").strip().lower()
-                    if main_area_note == "yes" or "y":
+                    if main_area_note in ["yes", "y"]:
                         print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
                         print("\n\"WHAT NOTE SAYS!\"")
                         break
-                    elif main_area_note == "no" or "n":
+                    elif main_area_note in ["no", "n"]:
                         print("You put the note back down.")
                         break
                 elif main_area_searched == True:
                     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-                    main_area_note = input("\nThere is nothing else here besides the note. Would you like to read the note again: ")
-                    while True:
-                        if main_area_note == "yes" or "y":
-                            print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-                            print("\n\"WHAT NOTE SAYS!\"")
-                            break
-                        elif main_area_note == "no" or "n":
-                            break
+                    main_area_note = input("\nThere is nothing else here besides the note\n\n     - Yes     \n     - No \n\nWould you like to read the note again: ")
+                    if main_area_note in ["yes", "y"]:
+                        print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+                        print("\n\"WHAT NOTE SAYS!\"")
+                        break
+                    elif main_area_note in ["no", "n"]:
+                        break
 
             elif search == "exit":
                 print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
@@ -183,7 +205,7 @@ def collapsed_house(living_room_searched, bedroom_searched, rubble_pile_searched
         while True:
             search = input("\nThere are 3 areas worth searching.\n   \n     - Living Room   \n     - Bedroom   \n     - Rubble Pile     \n     - Exit\n\nWhere would you like to go: ").lower().strip()
 
-            if search == "living room" or "bedroom" or "rubble pile" or "exit":
+            if search in ["living room", "bedroom", "rubble pile", "exit"]:
                 break
             else:
                 print("\nThat is not a room, please retry.")
@@ -205,7 +227,7 @@ def collapsed_house(living_room_searched, bedroom_searched, rubble_pile_searched
                     bedroom_searched = True
                     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
                     print("\nYou walk into a lone doorway with no wall, this seems to be the master bedroom of the house. You see a dresser barely visible from all the rubble. You walk to it, dig to the dresser drawer and inside you find a bandage.\n\n(+) Bandage")
-                    inventory["Consumables"]["Bandage"] = 10
+                    inventory["Consumables"]["Bandage"].append(10)
                     break
                 elif bedroom_searched == True:
                     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
@@ -214,7 +236,6 @@ def collapsed_house(living_room_searched, bedroom_searched, rubble_pile_searched
 
             elif search == "rubble pile":
                 if rubble_pile_searched == False:
-                    rubble_pile_searched = True
                     rubble_pile_searched = True
                     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
                     print("\nYou see a suspicious looking rubble pile. You dig through and find an unlocked chest, and in this chest is a key labeled \"Library\"\n\n(+) Library Key")
@@ -250,7 +271,7 @@ def mansion(master_bedroom_searched, vault_searched, garden_searched):
         while True:
             search = input("\nThere are 3 areas worth searching.\n   \n     - Master Bedroom   \n     - Vault   \n     - Garden     \n     - Exit\n\nWhere would you like to go: ").lower().strip()
 
-            if search == "master bedroom" or "vault" or "garden" or "exit":
+            if search in ["master bedroom", "vault", "garden", "exit"]:
                 break
             else:
                 print("\nThat is not a room, please retry.")
@@ -273,11 +294,11 @@ def mansion(master_bedroom_searched, vault_searched, garden_searched):
                     vault_searched = True
                     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
                     print("\nYou walk down the grand stairs into the basement. The only thing in this basement is a giant vault door, slightly cracked open. You peek in and see an intact glass showcase with an axe. This is not an ordinary axe, it has a mysterious dark aura around it. You pick it up and feel an eerie feeling.\n\n(+) Ghost Axe")
-                    inventory["Weapons"].append("Ghost Axe")
+                    inventory["Weapons"]["Ghost Axe"] = 50
                     break
                 elif vault_searched == True:
                     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-                    print("\nYou have already searched the vault and found a the Ghost Axe")
+                    print("\nYou have already searched the vault and found the Ghost Axe")
                     break
 
             elif search == "garden":
@@ -301,7 +322,7 @@ def mansion(master_bedroom_searched, vault_searched, garden_searched):
                 print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
                 print("\nThat is not a valid option, please retry.")
                 break
-        
+
 # prison
 def prison(kitchen_searched, cell_hallway_searched, cell_searched):
 
@@ -316,7 +337,7 @@ def prison(kitchen_searched, cell_hallway_searched, cell_searched):
         while True:
             search = input("\nThere are 3 areas worth searching.\n   \n     - Kitchen   \n     - Cell Hallway   \n     - Cell     \n     - Exit\n\nWhere would you like to go: ").lower().strip()
 
-            if search == "kitchen" or "cell hallway" or "cell" or "exit":
+            if search in ["kitchen", "cell hallway", "cell", "exit"]:
                 break
             else:
                 print("\nThat is not a room, please retry.")
@@ -382,7 +403,7 @@ def school(classroom_searched, school_library_searched, office_searched, cafeter
         while True:
             search = input("\nThere are 4 areas worth searching.\n   \n     - Classroom   \n     - School Library   \n     - Office     \n     - Cafeteria     \n     - Exit\n\nWhere would you like to go: ").lower().strip()
 
-            if search == "classroom" or "school library" or "office" or "cafeteria" or "exit":
+            if search in ["classroom", "school library", "office", "cafeteria", "exit"]:
                 break
             else:
                 print("\nThat is not a room, please retry.")
@@ -393,8 +414,8 @@ def school(classroom_searched, school_library_searched, office_searched, cafeter
                 if classroom_searched == False:
                     classroom_searched = True
                     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-                    print("\nYou enter the classroom. The roof seems that it is about to cave in. On one of the desks, there is an unopened energy drink that seems new. You pick it up and put it in your backpack.\n\n(+) Bandage")
-                    inventory["Consumables"]["Energy Drink"] = 4
+                    print("\nYou enter the classroom. The roof seems that it is about to cave in. On one of the desks, there is an unopened energy drink that seems new. You pick it up and put it in your backpack.\n\n(+) Energy Drink")
+                    inventory["Consumables"]["Energy Drink"].append(4)
                     break
                 elif classroom_searched == True:
                     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
@@ -405,7 +426,7 @@ def school(classroom_searched, school_library_searched, office_searched, cafeter
                 if school_library_searched == False:
                     school_library_searched = True
                     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-                    print("\You walk into the tiny library. The bookshelves are on the floor, and many books scattered through the floor. Nothing useful seems to be in here.")
+                    print("\nYou walk into the tiny library. The bookshelves are on the floor, and many books scattered through the floor. Nothing useful seems to be in here.")
                     break
                 elif school_library_searched == True:
                     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
@@ -415,24 +436,22 @@ def school(classroom_searched, school_library_searched, office_searched, cafeter
             elif search == "office":
                 if office_searched == False:
                     office_searched = True
-                    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
                     office_note = input("\nYou can't enter the office as it is locked shut. you peek over the front desk and find a note.\n\n     - Yes     \n     - No \n\nWould you like to read it: ").strip().lower()
-                    if office_note == "yes" or "y":
+                    if office_note in ["yes", "y"]:
                         print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
                         print("\n\"WHAT NOTE SAYS!\"")
                         break
-                    elif office_note == "no" or "n":
+                    elif office_note in ["no", "n"]:
                         print("You put the note back down.")
                         break
                 elif office_searched == True:
-                    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
                     office_note = input("\nThere is nothing else here besides the note. Would you like to read the note again: ")
                     while True:
-                        if office_note == "yes" or "y":
+                        if office_note in ["yes", "y"]:
                             print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
                             print("\n\"WHAT NOTE SAYS!\"")
                             break
-                        elif office_note == "no" or "n":
+                        elif office_note in ["no", "n"]:
                             break
 
             elif search == "exit":
@@ -446,8 +465,7 @@ def school(classroom_searched, school_library_searched, office_searched, cafeter
                 print("\nThat is not a valid option, please retry.")
                 break
 
-def room_input(locations, inventory):
-
+def room_input(locations):
     while True:
         print("\nThese locations look worth exploring.\n")
 
@@ -456,63 +474,70 @@ def room_input(locations, inventory):
         print("\nTo see what is in your backpack")
         print("\n     - Inventory")
 
-        location = input("\nWhat building would you like to go to: ").title().strip()
+        choice = input("\nWhat building would you like to go to: ").title().strip()
 
-        """if location == "inventory" or "inv" or "i":
+        if choice.lower() in ["inventory", "inv", "i"]:
             print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-            for key, item, in inventory.items():
-                print(f"{key}: {item}")
-            continue"""
+            show_inventory()
+            continue
 
-        if location not in locations:
+        if choice not in locations:
             print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
             print("\nThat place doesn't exist, choose another place.")
             continue
 
-        elif location in location:
-            return location
+        return choice
 
-        
-    
+
 intro_dialogue()
 
 while True:
-    location = room_input(locations, inventory)
+    location = room_input(locations)
 
     if location == "Trailer Home":
-        if trailer_home_searched == False:
-            trailer_home(bathroom_searched, storage_cabinet_searched,  main_area_searched)
+        if not trailer_home_searched:
+            trailer_home(bathroom_searched, storage_cabinet_searched, main_area_searched)
             trailer_home_searched = True
-        elif trailer_home_searched == True:
+        else:
             print("\nYou have already searched the Trailer Home.")
             trailer_home(bathroom_searched = True, storage_cabinet_searched = True, main_area_searched = True)
 
     elif location == "Collapsed House":
-        if collapsed_house_searched == False:
+        if not collapsed_house_searched:
             collapsed_house(living_room_searched, bedroom_searched, rubble_pile_searched)
             collapsed_house_searched = True
-        elif collapsed_house_searched == True:
+        else:
             print("\nYou have already searched the Collapsed House.")
             collapsed_house(living_room_searched = True, bedroom_searched = True, rubble_pile_searched = True)
     
     elif location == "Mansion":
-        if mansion_searched == False:
-            mansion(living_room_searched, bedroom_searched, rubble_pile_searched)
+        if not mansion_searched:
+            mansion(master_bedroom_searched, vault_searched, garden_searched)
             mansion_searched = True
-        elif mansion_searched == True:
+        else:
             print("\nYou have already searched the Mansion.")
-            mansion(master_bedroom_searched = True, vault_searched = True, garden_searched = True)
+            collapsed_house(living_room_searched = True, bedroom_searched = True, rubble_pile_searched = True)
 
     elif location == "Prison":
-        if prison_searched == False:
-            prison(kitchen_searched, cell_hallway_searched, cell_hallway_searched)
+        if not prison_searched:
+            prison(kitchen_searched, cell_hallway_searched, cell_searched)
             prison_searched = True
-        elif prison_searched == False:
-            print("\nYou have already searched the Prison")
+        else:
+            print("\nYou have already searched the Prison.")
             prison(kitchen_searched = True, cell_hallway_searched = True, cell_searched = True)
 
     elif location == "School":
-        school_key = "School"
-        if school_searched == False:
-            if school_key in inventory["Keys"]:
-                school()
+        school_key = "School Key"
+        if school_key not in inventory["Keys"]:
+            print("\nYou need the School Key to enter.")
+        elif not school_searched:
+            school(classroom_searched, school_library_searched, office_searched, cafeteria_searched)
+            school_searched = True
+        else:
+            print("\nYou have already searched the School.")
+            school(classroom_searched = True, school_library_searched = True, office_searched = True, cafeteria_searched = True)
+
+    elif location.lower() in ["inventory", "inv", "i"]:
+        show_inventory()
+
+

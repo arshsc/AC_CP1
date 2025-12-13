@@ -23,6 +23,7 @@ player_stamina = 10
 player_weapon_chosen = "Dagger"
 
 # servant stats (first boss)
+servant_defeated = False
 servant_health = 150
 servant_damage = random.randint(1, 20)
 
@@ -79,40 +80,143 @@ boarding_area_searched = False
 
 # entrance of the mine
 entrance_of_the_mine_searched = False
+cart_station_searched = False
+railroad_searched = False
 
 # underground railroad
 underground_railroad_searched = False
 
+
+# combat
+def servant_combat(player_health, player_stamina, player_weapon_chosen):
+
+    ghost_health = 100
+    base_player_damage = inventory["Weapons"][player_weapon_chosen]
+
+    print("The servant ghost turns toward you.")
+    print("\n\"YOU SHOULD NOT BE HERE,\" it yells.")
+
+    print(f"\n Weapon Equipped: {player_weapon_chosen}(+{inventory['Weapons'][player_weapon_chosen]} DMG)")
+
+    while True:
+        fight_confirm = input("\n     - Yes\n     - No\n\nAre you sure you want to fight the ghost: ").strip().lower()
+        if fight_confirm in ["yes", "y"]:
+            print("\nYou steel yourself and step forward...")
+            break
+        elif fight_confirm in ["no", "n"]:
+            print("\nYou take a step back, then turn around to run back into the mansion.")
+            return player_health, player_stamina, False  # Cancel the fight
+        else:
+            print("Please type Yes or No.")
+
+    # Randomly decide who goes first
+    turn = random.randint(1, 2)
+
+    while ghost_health > 0 and player_health > 0:
+
+        if turn == 1:
+            print("\nYOUR TURN")
+            print(f"Your Health: {player_health}")
+            print(f"Your Stamina: {player_stamina}")
+            print(f"\nGhost Health: {ghost_health}")
+
+            if player_stamina <= 0:
+                print("\nYou are too exhausted to move!")
+                player_stamina += 2
+                print("You regain 2 stamina.")
+                turn = 2
+                continue
+
+            choice = input("\n\n    - Quick Slash\n    - Charge Attack\n    - Consumable\n\nChoose an action: "
+            ).lower().strip()
+
+            if choice == "quick slash":
+                damage = base_player_damage + 5
+                player_stamina -= 1
+                ghost_health -= damage
+                print(f"\nYou dash forward and slash the ghost for {damage} damage!")
+
+            elif choice == "charge attack":
+                if player_stamina < 4:
+                    print("\nYou don't have enough stamina!")
+                    turn = 2
+                    continue
+                damage = base_player_damage + 10
+                player_stamina -= 3
+                ghost_health -= damage
+                print(f"\nYou charge your weapon and strike for {damage} damage!")
+
+            elif choice == "consumable":
+                if len(inventory["Consumables"]["Bandage"]) == 0 and len(inventory["Consumables"]["Energy Drink"]) == 0:
+                    print("\nYou have no consumables!")
+                else:
+                    use = input("\nUse Bandage or Energy Drink: ").lower().strip()
+
+                    if use == "bandage" and len(inventory["Consumables"]["Bandage"]) > 0:
+                        heal = inventory["Consumables"]["Bandage"].pop()
+                        player_health += heal
+                        if player_health > 50:
+                            player_health = 50
+                        print(f"\nYou heal yourself for {heal} HP.")
+
+                    elif use == "energy drink" and len(inventory["Consumables"]["Energy Drink"]) > 0:
+                        stam = inventory["Consumables"]["Energy Drink"].pop()
+                        player_stamina += stam
+                        print(f"\nYou regain {stam} stamina.")
+
+                    else:
+                        print("\nInvalid consumable choice.")
+
+            else:
+                print("\n" *20)
+                print("\nInvalid action.")
+                continue
+
+            if ghost_health <= 0:
+                print("\nThe servant lets out a final scream and fades away...")
+                print("Something drops to the ground.")
+                inventory["Items"].append("Servant Relic")
+                print("\n(+) Servant Relic")
+                return player_health, player_stamina, True
+
+            turn = 2
+
+        else:
+            print("\nGHOST'S TURN")
+
+            ghost_choice = random.randint(1, 2)
+
+            if ghost_choice == 1:
+                damage = random.randint(4, 7)
+                print("\nThe servant slashes at you with icy claws!")
+            else:
+                damage = random.randint(8, 14)
+                print("\nThe servant charges and smashes into you!")
+            if random.randint(1, 100) <= 25:
+                print("The servant’s attack passes through you!")
+                damage = 0
+
+            player_health -= damage
+            print(f"You take {damage} damage!")
+
+            # Check if player is dead
+            if player_health <= 0:
+                print("\nYour vision fades as the servant laughs...")
+                print("YOU HAVE DIED.")
+                return 0, player_stamina, False
+
+            turn = 1
+    if servant_health <= 0:
+        print("\nThe ghost lets out a final wail and fades away...")
+        print("You obtained the Ghost Servant's Item!")
+        servant_defeated = True   # <-- important
+        inventory["Weapons"]["Spectral Dagger"] = 30  # example drop
+        return player_health, player_stamina, servant_defeated
+
+
 # function for intro
 def intro_dialogue():
     print("\nYou heard of a rumor about an abandoned, small, ghost town 20 minutes away from your home town having valuable gems somewhere deep in the mines. No one has dared to go retrieve the valuable gems as there are spirits preventing you from going into the mines. Many deaths have been reported at this town.\n\nYou decide you want to go.\n\nYou inform your family and friends, they all try to stop you but you are determined.\n\nYou pack your bag with these items.\n\nDagger\nBandage\nEnergy Drink\nPhone\n\nYou set out and get to the town. Your adventure begins.\n\nYou arrive to the desolate town. Buildings are boarded up, the roads have a layer of sand and dirt, no one has stepped foot here in years. You take out your phone to call your family. The call rings infinitely, your phone has no service. It is just you, all alone.")
-
-def show_inventory():
-    print("\nWeapons:")
-    for weapon, dmg in inventory["Weapons"].items():
-        print(f" - {weapon}: {dmg} dmg")
-
-    print("\nConsumables:")
-    for item, effects in inventory["Consumables"].items():
-        for effect in effects:
-            if item == "Bandage":
-                print(f" - {item}: +{effect} HP")
-            elif item == "Energy Drink":
-                print(f" - {item}: +{effect} Stamina")
-
-    print("\nKeys:")
-    if len(inventory["Keys"]) == 0:
-        print(" - None")
-    else:
-        for key in inventory["Keys"]:
-            print(f" - {key}")
-
-    print("\nItems:")
-    if len(inventory["Items"]) == 0:
-        print(" - None")
-    else:
-        for item in inventory["Items"]:
-            print(f" - {item}")
 
 # trailer home
 def trailer_home(bathroom_searched, storage_cabinet_searched, main_area_searched):
@@ -267,7 +371,7 @@ def collapsed_house(living_room_searched, bedroom_searched, rubble_pile_searched
                 break
 
 # mansion
-def mansion(master_bedroom_searched, vault_searched, garden_searched, weapon):
+def mansion(master_bedroom_searched, vault_searched, garden_searched, player_weapon_chosen, player_health, player_stamina):
 
     location = "Mansion"
     
@@ -310,7 +414,8 @@ def mansion(master_bedroom_searched, vault_searched, garden_searched, weapon):
                         if weapon_choice == "Dagger":
                             break
                         if weapon_choice == "Ghost Axe":
-                            weapon = "Ghost Axe"
+                            player_weapon_chosen = "Ghost Axe"
+                            break
                     break
                 elif vault_searched == True:
                     print("\n" *20)
@@ -320,9 +425,14 @@ def mansion(master_bedroom_searched, vault_searched, garden_searched, weapon):
             elif search == "garden":
                 if garden_searched == False:
                     garden_searched = True
-                    print("\n" *20)
-                    print("\nYou walk to the back door and open the glass sliding door. A beautiful vibrant garden greets you. In the corner, you see a servant watering the flowers. He turns around and you see he is transparent. Its a ghost, and he seems to be angry at you.")
-                    break
+                    if servant_defeated == False:
+                        print("\n" *20)
+                        print("\nYou walk to the back door and open the glass sliding door. A beautiful vibrant garden greets you. In the corner, you see a servant watering the flowers. He turns around and you see he is transparent. Its a ghost, and he seems to be angry at you.")
+                        player_health, player_stamina, servant_defeated = servant_combat(player_health, player_stamina, player_weapon_chosen)
+                        break
+                    elif servant_defeated == True:
+                        print("\n" *20)
+                        print("\nThe servant has already been defeated. The garden is peaceful now.")
                 elif garden_searched == True:
                     print("\n" *20)
                     print("\nYou have already fought the servant and got the...ITEM")
@@ -331,13 +441,16 @@ def mansion(master_bedroom_searched, vault_searched, garden_searched, weapon):
             elif search == "exit":
                 print("\n" *20)
                 print("\nYou exit the Mansion")
-                location = "Town"
+                location = "Town" 
                 break
 
             else:
                 print("\n" *20)
                 print("\nThat is not a valid option, please retry.")
                 break
+
+    return master_bedroom_searched, vault_searched, garden_searched, player_weapon_chosen, player_health, player_stamina, servant_defeated
+
 
 # prison
 def prison(kitchen_searched, cell_hallway_searched, cell_searched):
@@ -558,7 +671,121 @@ def library(bookshelf_searched, theatre_stage, front_desk_searched):
                 print("\nThat is not a valid option, please retry.")
                 break
 
+# train station
+def train_station(ticket_office_searched, boarding_area_searched):
 
+    location = "Train Station"
+    
+    print("\n" *20)
+    print("\nYou walk over towards the train station. The door is locked but you use your train station key to enter.")
+    print("\nThere is an immense amount of dust everywhere with cobwebs all over the inside.")
+
+    while location == "Train Station":
+
+        while True:
+            search = input("\nThere are 2 areas worth searching.\n   \n     - Ticket Office   \n     - Boarding Area   \n     - Exit\n\nWhere would you like to go: ").lower().strip()
+
+            if search in ["ticket office", "boarding area", "exit"]:
+                break
+            else:
+                print("\nThat is not a room, please retry.")
+
+        while True:
+            if search == "ticket office":
+                if ticket_office_searched == False:
+                    ticket_office_searched = True
+                    print("\n" *20)
+                    print("\nYou use the train station key once again to enter the ticket office. On the desk, there is an energy drink and bandage left there. You grab it and put it in your backpack.\n\n(+) Energy Drink\n\n(+) Bandage")
+                    inventory["Consumables"]["Energy Drink"].append(4)
+                    inventory["Consumables"]["Bandage"].append(10)
+                    break
+                elif ticket_office_searched == True:
+                    print("\n" *20)
+                    print("\nYou already searched the ticket office and found the energy drink and bandage.")
+                    break
+
+            elif search == "boarding area":
+                if boarding_area_searched == False:
+                    boarding_area_searched = True
+                    print("\n" *20)
+                    print("\nYou walk outside onto the boarding area. On the wall to your left is a lever for the train. You decide to pull it and then it falls off, and then you pick it up and put it in your backpack.\n\n(+) Lever")
+                    inventory["Items"].append("Lever")
+                    break
+                elif boarding_area_searched == True:
+                    print("\n" *20)
+                    print("\nYou have already searched the boarding area and found a lever.")
+                    break
+
+            elif search == "exit":
+                print("\n" *20)
+                print("\nYou exit the train station")
+                location = "Town"
+                break
+
+            else:
+                print("\n" *20)
+                print("\nThat is not a valid option, please retry.")
+                break
+
+# entrance of mine
+def entrance_of_mine(cart_station_searched, railroad_searched):
+
+    location = "Entrance of the Mines"
+    cart_on_rails = False
+    
+    print("\n" *20)
+    print("You walk to the entrance of the mines. The lever to open the gate is broken. You pull it off and insert the lever you stored in your backpack. You flick the lever and the gate opens.")
+    print("\nThere is a narrow hallway leading to the railroad with a few carts on the sides.")
+
+    while location == "Train Station":
+
+        while True:
+            search = input("\nThere are 2 areas worth searching.\n   \n     - Cart Station   \n     - Railroad   \n     - Exit\n\nWhere would you like to go: ").lower().strip()
+
+            if search in ["cart station", "railroad", "exit"]:
+                break
+            else:
+                print("\nThat is not a room, please retry.")
+
+        while True:
+            if search == "cart station":
+                if cart_station_searched == False:
+                    cart_station_searched = True
+                    print("\n" *20)
+                    print("\nYou turn the corner to the cart station. A bunch of old carts are left here. You need one to go down into the mines. So you decide to grab a cart and put it onto the rails.")
+                    cart_on_rails = True
+                    break
+                elif cart_station_searched == True:
+                    print("\n" *20)
+                    print("\nYou already searched the cart station and put the cart on to the rails.")
+                    break
+
+            elif search == "railroad":
+                if railroad_searched == False:
+                    railroad_searched = True
+                    if cart_on_rails == False:
+                        print("\n" *20)
+                        print("\nYou walk to the rails and see it goes into a dark tunnel. You don't have a cart to go in.")
+                        break
+                    elif cart_on_rails == True:
+                        print("\n" *20)
+                        go_into_mines = input("\nYou are ready to go down into the mines\n\n     - Yes\n     - No\nWould you like to:")
+                        return go_into_mines
+                elif railroad_searched == True:
+                    print("\n" *20)
+                    print("\nYou have already searched the boarding area and found a lever.")
+                    break
+
+            elif search == "exit":
+                print("\n" *20)
+                print("\nYou exit the train station")
+                location = "Town"
+                break
+
+            else:
+                print("\n" *20)
+                print("\nThat is not a valid option, please retry.")
+                break
 # room input and inventory function
 def room_input(locations):
     while True:
@@ -583,10 +810,39 @@ def room_input(locations):
 
         return choice
 
+# inventory
+def show_inventory(player_weapon_chosen):
+    print(f"Weapon in use: {player_weapon_chosen}")
+    print("\nWeapons:")
+    for weapon, dmg in inventory["Weapons"].items():
+        print(f" - {weapon}: {dmg} dmg")
+
+    print("\nConsumables:")
+    for item, effects in inventory["Consumables"].items():
+        for effect in effects:
+            if item == "Bandage":
+                print(f" - {item}: +{effect} HP")
+            elif item == "Energy Drink":
+                print(f" - {item}: +{effect} Stamina")
+
+    print("\nKeys:")
+    if len(inventory["Keys"]) == 0:
+        print(" - None")
+    else:
+        for key in inventory["Keys"]:
+            print(f" - {key}")
+
+    print("\nItems:")
+    if len(inventory["Items"]) == 0:
+        print(" - None")
+    else:
+        for item in inventory["Items"]:
+            print(f" - {item}")
 
 intro_dialogue()
 
 while True:
+
     location = room_input(locations)
 
     if location == "Trailer Home":
@@ -609,7 +865,7 @@ while True:
     
     elif location == "Mansion":
         if not mansion_searched:
-            mansion(master_bedroom_searched, vault_searched, garden_searched, player_weapon_chosen)
+            mansion(master_bedroom_searched, vault_searched, garden_searched, player_weapon_chosen, player_health, player_stamina)
             mansion_searched = True
         else:
             print("\n" *20)
@@ -642,9 +898,29 @@ while True:
         library_key = "Library Key"
         if library_key not in inventory["Keys"]:
             print("\n" *20)
+            print("\nYou need the Library Key to enter.")
+        elif not library_searched:
+            library(bookshelf_searched, theatre_stage_searched, front_desk_searched)
+            library_searched = True
+        else:
+            print("\n" *20)
+            print("\nYou have already entered the Library")
+            library(bookshelf_searched =  True, theatre_stage_searched = True, front_desk_searched = True)
 
+    elif location == "Train Station":
+        train_station_key = "Train Station Key"
+        if train_station_key not in inventory["Keys"]:
+            print("\n" *20)
+            print("\nYou need the Train Station Key to enter.")
+        elif not train_station_searched:
+            train_station(ticket_office_searched, boarding_area_searched)
+            train_station_searched = True
+        else:
+            print("\n" *20)
+            print("\nYou have already entered the Train Station")
+            train_station(ticket_office_searched = True, boarding_area_searched = True)
 
     elif location.lower() in ["inventory", "inv", "i"]:
-        show_inventory()
+        show_inventory(player_weapon_chosen)
 
 

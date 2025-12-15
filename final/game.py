@@ -11,8 +11,7 @@ def servant_combat(player_health, player_stamina, player_weapon_chosen):
 
     print("\n" *20)
     print("\nThe servant ghost turns toward you.")
-    print("\n\"You should not be here!,\" it yells.")
-
+    print("\n\"You should not be here!\" it yells.")
     print(f"\n Weapon Equipped: {player_weapon_chosen} (+{inventory['Weapons'][player_weapon_chosen]} DMG)")
 
     while True:
@@ -113,7 +112,7 @@ def servant_combat(player_health, player_stamina, player_weapon_chosen):
 
             if ghost_health <= 0:
                 print("\nThe servant yells and then faded away into thin air. Something drops from where the servant once stood.")
-                inventory["Items"].append("Rail Key")
+                inventory["Keys"].append("Rail Key")
                 print("\n(+) Rail Key")
                 return player_health, player_stamina, True
 
@@ -129,7 +128,7 @@ def servant_combat(player_health, player_stamina, player_weapon_chosen):
                 print("The servant slashes at you with the butter knife!")
             else:
                 damage = random.randint(8, 14)
-                print("\nThe servant charges and smashes the metal plate onto your head!")
+                print("The servant charges and smashes the metal plate onto your head!")
             if random.randint(1, 100) <= 25:
                 print("The servant’s attack passes through you!")
                 damage = 0
@@ -139,15 +138,11 @@ def servant_combat(player_health, player_stamina, player_weapon_chosen):
 
             # Check if player is dead
             if player_health <= 0:
-                print("\n\nYOU HAVE DIED.")
+                print("\n\nYOU HAVE DIED.\n")
                 return 0, player_stamina, False
 
             turn = 1
 
-
-# function for intro
-def intro_dialogue():
-    print("\nYou heard of a rumor about an abandoned, small, ghost town 20 minutes away from your home town having valuable gems somewhere deep in the mines. No one has dared to go retrieve the valuable gems as there are spirits preventing you from going into the mines. Many deaths have been reported at this town.\n\nYou decide you want to go.\n\nYou inform your family and friends, they all try to stop you but you are determined.\n\nYou pack your bag with these items.\n\n     - Dagger\n     - Bandage\n     - Energy Drink\n     - Phone\n\nYou set out and get to the town. Your adventure begins.\n\nYou arrive to the desolate town. Buildings are boarded up, the roads have a layer of sand and dirt, no one has stepped foot here in years. You take out your phone to call your family. The call rings infinitely, your phone has no service. It is just you, all alone.")
 
 # trailer home
 def trailer_home(bathroom_searched, storage_cabinet_searched, main_area_searched):
@@ -201,7 +196,7 @@ def trailer_home(bathroom_searched, storage_cabinet_searched, main_area_searched
                     main_area_note = input("\nYou look around your surroundings. On the small dining table there is a note available to read.\n\n     - Yes     \n     - No \n\nWould you like to read it: ").strip().lower()
                     if main_area_note in ["yes", "y"]:
                         print("\n" *20)
-                        print("\n\"WHAT NOTE SAYS!\"")
+                        print("\n\"Dear #$&@!#$,\nI overheard one of my 3rd grade students talking about something dark. I heard about an axe that has special properties. This could all be a hoax, I am not sure. It might be worth your time to go check on the student's parents.\"")
                         break
                     elif main_area_note in ["no", "n"]:
                         print("\n" *20)
@@ -215,7 +210,7 @@ def trailer_home(bathroom_searched, storage_cabinet_searched, main_area_searched
                     main_area_note = input("\nThere is nothing else here besides the note\n\n     - Yes     \n     - No \n\nWould you like to read the note: ")
                     if main_area_note in ["yes", "y"]:
                         print("\n" *20)
-                        print("\n\"WHAT NOTE SAYS!\"")
+                        print("\n\"Dear #$&@!#$,\nI overheard one of my 3rd grade students talking about something dark. I heard about an axe that has special properties. This could all be a hoax, I am not sure. It might be worth your time to go check on the student's parents.\"")
                         break
                     elif main_area_note in ["no", "n"]:
                         print("\n" *20)
@@ -348,8 +343,12 @@ def mansion(master_bedroom_searched, vault_searched, garden_searched, player_wea
                     while True:
                         weapon_choice = input("\n     - Dagger (+10 DMG)\n     - Ghost Axe (+15 DMG)\n\nWhich weapon would you like to use: ").strip().title()
                         if weapon_choice == "Dagger":
+                            print("\n" *20)
+                            print("\nYou stash the Ghost Axe into your backpack.")
                             break
                         if weapon_choice == "Ghost Axe":
+                            print("\n" *20)
+                            print("\nYou stash your dagger into your backpack and hold the Ghost Axe.")
                             player_weapon_chosen = "Ghost Axe"
                             break
                     break
@@ -360,6 +359,7 @@ def mansion(master_bedroom_searched, vault_searched, garden_searched, player_wea
 
             elif search == "garden":
                 if not garden_searched:
+                    print("You enter the vibrant garden behind the mansion.")
                     if not servant_defeated:
                         player_health, player_stamina, fought = servant_combat(player_health, player_stamina, player_weapon_chosen)
                         if fought:
@@ -510,7 +510,7 @@ def school(classroom_searched, school_library_searched, office_searched, cafeter
                     office_note = input("\nYou can't enter the office as it is locked shut. you peek over the front desk and find a note.\n\n     - Yes     \n     - No \n\nWould you like to read the note: ").strip().lower()
                     if office_note in ["yes", "y"]:
                         print("\n" *20)
-                        print("\n\"WHAT NOTE SAYS!\"")
+                        print("\n\"THE MINES HOLD #$%&!@# AND %$#@, SOMETHING PROTECTS IT.\"")
                         break
                     elif office_note in ["no", "n"]:
                         print("\n" *20)
@@ -524,6 +524,8 @@ def school(classroom_searched, school_library_searched, office_searched, cafeter
                         print("\n\"WHAT NOTE SAYS!\"")
                         break
                     elif office_note in ["no", "n"]:
+                        print("\n" *20)
+                        print("\nYou put the note down.")
                         break
             elif search == "cafeteria":
                 if cafeteria_searched == False:
@@ -679,8 +681,7 @@ def train_station(ticket_office_searched, boarding_area_searched):
 def entrance_of_mine(cart_station_searched, railroad_searched, cart_on_rails):
 
     location = "Entrance of the Mines"
-    enter_mines = False
-
+    enter_mines = False 
     print("\n" *20)
     print("You walk to the entrance of the mines. The lever to open the gate is broken. You pull it off and insert the lever you stored in your backpack. You flick the lever and the gate opens.")
     print("\nThere is a narrow hallway leading to the railroad with a few carts on the sides.")
@@ -711,9 +712,9 @@ def entrance_of_mine(cart_station_searched, railroad_searched, cart_on_rails):
                 if go_into_mines in ["yes", "y"]:
                     wire_count = inventory["Items"].count("Wire")
                     battery_found = "Battery" in inventory["Items"]
-                    servant_relic = "Rail Key" in inventory["Items"]
+                    rail_key = "Rail Key" in inventory["Items"]
 
-                    if wire_count >= 3 and battery_found and servant_relic:
+                    if wire_count >= 3 and battery_found and rail_key:
                         enter_mines = True
                         break
                     else:
@@ -722,7 +723,7 @@ def entrance_of_mine(cart_station_searched, railroad_searched, cart_on_rails):
                             missing.append(f"{3 - wire_count} Wire(s)")
                         if not battery_found:
                             missing.append("Battery")
-                        if not servant_relic:
+                        if not rail_key:
                             missing.append("Rail Key")
 
                         print("\n" *20)
@@ -754,7 +755,7 @@ def underground_railroad(wire_count, battery_found, miner_health, miner_damage, 
     location = "Underground Railroad"
     miner_defeated = False
 
-    print("\n" * 20)
+    print("\n" *20)
     print("You arrive at the Underground Railroad. It is dark, damp, and full of old mining equipment.")
     
     # Check if player has enough items to access
@@ -766,17 +767,17 @@ def underground_railroad(wire_count, battery_found, miner_health, miner_damage, 
 
     while location == "Underground Railroad":
         
-        search = input("\nThere is a path deeper into the tunnels.\n   - Proceed\n   - Exit\n\nWhere would you like to go: ").lower().strip()
+        search = input("\nThere is a path deeper into the tunnels.\n\n   - Proceed\n   - Exit\n\nWhere would you like to go: ").lower().strip()
 
         if search == "exit":
-            print("\n" * 20)
+            print("\n" *20)
             print("\nYou go back to the surface. You can revisit all previously explored locations.")
             location = "Town"
             break
 
         elif search == "proceed":
             if miner_defeated == False:
-                print("\n" * 20)
+                print("\n" *20)
                 print("As you go deeper, a massive miner blocks your path. He is guarding the valuable gems!")
                 
                 # Combat with final boss
@@ -841,11 +842,13 @@ def underground_railroad(wire_count, battery_found, miner_health, miner_damage, 
 
     return wire_count, battery_found, miner_health, player_health, player_stamina, miner_defeated
 
-
-
+# intro
+def intro_monologue():
+    print("\nYou heard of a rumor about an abandoned, small, ghost town 20 minutes away from your home town having valuable gems somewhere deep in the mines. No one has dared to go retrieve the valuable gems as there are spirits preventing you from going into the mines. Many deaths have been reported at this town.\n\nYou decide you want to go.\n\nYou inform your family and friends, they all try to stop you but you are determined.\n\nYou pack your bag with these items.\n\n     - Dagger\n     - Bandage\n     - Energy Drink\n     - Phone\n\nYou set out and get to the town. Your adventure begins.\n\nYou arrive to the desolate town. Buildings are boarded up, the roads have a layer of sand and dirt, no one has stepped foot here in years. You take out your phone to call your family. The call rings infinitely, your phone has no service. It is just you, all alone.")
 
 # inventory
 def show_inventory(player_weapon_chosen):
+
     print(f"Weapon in use: {player_weapon_chosen}")
     print("\nWeapons:")
     for weapon, dmg in inventory["Weapons"].items():
@@ -876,7 +879,11 @@ def show_inventory(player_weapon_chosen):
 
 # room input and inventory function
 def room_input(locations, player_weapon_chosen):
+
+    random.shuffle(locations)
+
     while True:
+
         print("\nThese locations look worth exploring.\n")
 
         for l in locations:
@@ -898,7 +905,9 @@ def room_input(locations, player_weapon_chosen):
 
         return choice
 
+# game loop
 while True:
+    # dictionary for the inventory
     inventory = {
         "Weapons": {
             "Dagger": 10
@@ -927,7 +936,6 @@ while True:
     # miner stats (final boss)
     miner_health = 250
     miner_damage = random.randint(25, 50)
-
 
     # list of all locations
     locations = ["Trailer Home", "Collapsed House", "Mansion", "Prison", "School", "Library", "Train Station", "Entrance Of The Mines", "Underground Railroad"]
@@ -984,9 +992,12 @@ while True:
     # underground railroad
     underground_railroad_searched = False
 
-    intro_dialogue()
+
+    # start to play the game
+    intro_monologue()
 
     while True:
+
         if player_health <= 0:
             print("\nYou have died. Game Over.")
             break
@@ -1082,34 +1093,35 @@ while True:
                 cart_station_searched, railroad_searched, cart_on_rails, enter_mines = entrance_of_mine(cart_station_searched, railroad_searched, cart_on_rails)
 
                 if enter_mines == True:
+                    wires_needed = 3
+                    battery_needed = "Battery"
                     wire_count = inventory["Items"].count("Wire")
-                    battery_found = "Battery" in inventory["Items"]
-                    wire_count, battery_found, miner_health, player_health, player_stamina, miner_defeated = underground_railroad(wire_count, battery_found, miner_health, player_health, player_stamina, player_weapon_chosen)
+                    has_battery = battery_needed in inventory["Items"]
+
+                    if wire_count < wires_needed or not has_battery:
+                        print("\n" *20)
+                        print(f"\nYou need at least {wires_needed} Wires and a Battery to enter the Underground Railroad.")
+                    elif not underground_railroad_searched:
+                        wire_count, has_battery, miner_health, player_health, player_stamina, miner_defeated = underground_railroad(wire_count, has_battery, miner_health, miner_damage, player_health, player_stamina, player_weapon_chosen)
+                        underground_railroad_searched = True
+                    else:
+                        print("\n" *20)
+                        print("\nYou have already entered the Underground Railroad.")
+                        wire_count, has_battery, miner_health, player_health, player_stamina, miner_defeated = underground_railroad(wire_count, has_battery, miner_health, player_health, player_stamina, player_weapon_chosen)
 
         elif location == "Underground Railroad":
-            wires_needed = 3
-            battery_needed = "Battery"
-            wire_count = inventory["Items"].count("Wire")
-            has_battery = battery_needed in inventory["Items"]
-
-            if wire_count < wires_needed or not has_battery:
-                print("\n" * 20)
-                print(f"\nYou need at least {wires_needed} Wires and a Battery to enter the Underground Railroad.")
-            elif not underground_railroad_searched:
-                wire_count, has_battery, miner_health, player_health, player_stamina, miner_defeated = underground_railroad(wire_count, has_battery, miner_health, miner_damage, player_health, player_stamina, player_weapon_chosen)
-                underground_railroad_searched = True
-            else:
-                print("\n" * 20)
-                print("\nYou have already entered the Underground Railroad.")
-                wire_count, has_battery, miner_health, player_health, player_stamina, miner_defeated = underground_railroad(wire_count, has_battery, miner_health, player_health, player_stamina, player_weapon_chosen)
+            print("\n" *20)
+            print("You cannot go into the Underground Railroad from here.")
 
         elif location.lower() in ["inventory", "inv", "i"]:
             show_inventory(player_weapon_chosen)
+    
     replay = input("\n\n     - Yes     \n     - No \n\nWould you like to play again?").strip().lower()
 
     if replay in ["yes", "y"]:
         continue
     else:
+        print("\n" *20)
         print("Thanks for playing!")
         break
 
